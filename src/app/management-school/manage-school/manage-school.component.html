@@ -1,0 +1,22 @@
+<div class="d-flex px-5 py-2 justify-content-between">
+  <div class="d-flex flex-column w-50">
+    <app-teacher-form
+      (eventCreateTeacher)="refresListOption()"
+    ></app-teacher-form>
+    <app-matiere-form
+      (eventCreateMatiere)="refresListOption()"
+    ></app-matiere-form>
+  </div>
+  <div class="d-flex">
+    <app-programation-form
+      (eventToCreateProgram)="refreshProgrammeList()"
+      (eventToDeleteProgram)="refreshProgrammeList()"
+      (eventToUpdateProgram)="refreshProgrammeList()"
+      [professeurs]="professeurList"
+      [responseData]="responseDatas"
+      [classes]="classeList"
+      [matieres]="matiereList"
+      [programmations]="data"
+    ></app-programation-form>
+  </div>
+</div>

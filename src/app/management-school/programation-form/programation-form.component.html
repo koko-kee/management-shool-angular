@@ -1,0 +1,116 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Programme</h5>
+    <form
+      [formGroup]="programmeForm"
+      (ngSubmit)="createProgramme()"
+      class="mb-5"
+    >
+      <div class="mb-3">
+        <label for="disabledSelect" class="form-label">Matiere</label>
+        <select
+          formControlName="matiere_id"
+          id="disabledSelect"
+          class="form-select"
+        >
+          <option
+            *ngFor="let matiere of matieres"
+            [value]="matiere.id"
+            [selected]="
+              programmeEdit != undefined
+                ? matiere.id === programmeEdit.matiere.id
+                : null
+            "
+          >
+            {{ matiere.nom }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Classe</label>
+        <select formControlName="classe_id" class="form-select">
+          <option
+            *ngFor="let classe of classes"
+            [value]="classe.id"
+            [selected]="
+              programmeEdit != undefined
+                ? classe.id === programmeEdit.classe.id
+                : null
+            "
+          >
+            {{ classe.nom }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Professeur</label>
+        <select
+          formControlName="professeur_id"
+          style="width: 600px"
+          class="form-select"
+        >
+          <option
+            *ngFor="let professeur of professeurs"
+            [value]="professeur.id"
+            [selected]="
+              programmeEdit != undefined
+                ? professeur.id === programmeEdit.professeur.id
+                : null
+            "
+          >
+            {{ professeur.nom }}
+          </option>
+        </select>
+      </div>
+      <button
+        type="submit"
+        [ngClass]="
+          programmeEdit !== undefined ? 'btn btn-warning' : 'btn btn-primary'
+        "
+      >
+        {{ programmeEdit !== undefined ? "Editer" : "Enregistrer" }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Professeur</th>
+      <th scope="col">Specialite</th>
+      <th scope="col">Classe</th>
+      <th scope="col">Matière</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let programmation of programmations">
+      <td>
+        {{ programmation.professeur.prenom }} {{ programmation.professeur.nom }}
+      </td>
+      <td>{{ programmation.professeur.specialite }}</td>
+      <td>{{ programmation.classe.nom }}</td>
+      <td>{{ programmation.matiere.nom }}</td>
+      <td class="d-flex justify-content-between">
+        <div (click)="edit(programmation)" class="btn btn-warning">Editer</div>
+        <div (click)="remove(programmation.id)" class="btn btn-danger">
+          Delete
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li
+      *ngFor="let link of responseData.data.links"
+      class="page-item"
+      [class.active]="link.active"
+    >
+      <a style="cursor: pointer" class="page-link" (click)="paginate(link.url)">
+        {{ link.label }}</a
+      >
+    </li>
+  </ul>
+</nav>
